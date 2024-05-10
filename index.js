@@ -38,18 +38,23 @@ app.use('/warehouse', warehouse);
 app.use('/orders', orders);
 app.use('/aggregate', aggregate);
 
-
+// Test API endpoint
+app.get('/test', (req, res) => {
+     res.send('Hello, world!');
+   });
 
 
 
 
 /*
+
+1- ❯ docker-compose logs api
+
   To utilize Docker and docker-compose.yml, 
-  simply execute `docker-compose up` 
+2-  simply execute `docker-compose up` 
   in your project directory to start all defined services.
 
-
-  Restart Containers: After updating your docker-compose.yml file to set the MONGODB_URI environment variable correctly, make sure to restart your Docker containers using docker-compose up -d to apply the changes.
+3-  Restart Containers: After updating your docker-compose.yml file to set the MONGODB_URI environment variable correctly, make sure to restart your Docker containers using docker-compose up -d to apply the changes.
 */
 
 
