@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 (async () => {
      dotenv.config();
      try {
-          const mongoUrl = process.env.DB_URL;
+          const mongoUrl = process.env.MONGODB_URI;
           mongoose.connect(mongoUrl);
           console.log(mongoUrl);
           console.log('Database is connected successfully...........');
@@ -18,6 +18,8 @@ import dotenv from 'dotenv';
           console.error('mongodb is not connected', error);
      }
 })();
+
+
 
 // import order from './router/order.js';
 import users from './router/user.js';
@@ -36,6 +38,19 @@ app.use('/products', product);
 app.use('/warehouse', warehouse);
 app.use('/orders', orders);
 app.use('/aggregate', aggregate);
+
+
+
+
+
+
+/*
+  To utilize Docker and docker-compose.yml, 
+  simply execute `docker-compose up` 
+  in your project directory to start all defined services.
+*/
+
+
 
 app.listen(3002, function () {
      console.log(`listening on 3002`);

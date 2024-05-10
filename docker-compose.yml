@@ -46,7 +46,7 @@ services:
       - 4000:3002
     environment:
       PORT: 3002
-      MONGODB_URI: mongodb://mongo_db:27017
+      MONGODB_URI: mongodb://127.0.0.1:27017/ecom-stripe
       DB_NAME: sample-db
     depends_on:
       - mongo_db
