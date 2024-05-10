@@ -10,8 +10,7 @@ import dotenv from 'dotenv';
 (async () => {
      dotenv.config();
      try {
-          const mongoUrl = process.env.MONGODB_URI;
-          mongoose.connect(mongoUrl);
+          const mongoUrl = process.env.MONGODB_URI.replace('127.0.0.1', 'mongo_db');
           console.log(mongoUrl);
           console.log('Database is connected successfully...........');
      } catch (error) {
@@ -48,10 +47,13 @@ app.use('/aggregate', aggregate);
   To utilize Docker and docker-compose.yml, 
   simply execute `docker-compose up` 
   in your project directory to start all defined services.
+
+
+  Restart Containers: After updating your docker-compose.yml file to set the MONGODB_URI environment variable correctly, make sure to restart your Docker containers using docker-compose up -d to apply the changes.
 */
 
 
 
-app.listen(3002, function () {
+app.listen(process.env.PORT, function () {
      console.log(`listening on 3002`);
 });

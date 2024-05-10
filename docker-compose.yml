@@ -5,7 +5,7 @@
 # services:
 #   # Mongo services
 #   mongo_db:
-#     container_name: db_container
+#     container_name: ecom_container
 #     image: mongo:latest
 #     restart: always
 #     volumes:
@@ -18,13 +18,13 @@
 #       - 4000:3002
 #     environment:
 #       PORT: 3002
-#       MONGODB_URI: mongodb://mongo_db:27017
-#       DB_NAME: sample-db
+#       MONGODB_URI: mongodb://127.0.0.1:27017
+#       DB_NAME: ecom-stripe
 #     depends_on:
 #       - mongo_db
 
-#   volumes:
-#     mongo_data: {}
+# volumes:
+#   mongo_data: {}
 
 
 
@@ -33,23 +33,19 @@ version: '3.9'
 services:
   # Mongo services
   mongo_db:
-    container_name: db_container
+    container_name: ecom_container
     image: mongo:latest
     restart: always
-    volumes:
-      - mongo_data:/data/db
 
-  # Node api services
+  # Node API services
   api:
     build: .
     ports:
       - 4000:3002
-    environment:
+    environment:  
       PORT: 3002
-      MONGODB_URI: mongodb://127.0.0.1:27017/ecom-stripe
-      DB_NAME: sample-db
+      MONGODB_URI: mongo_db:27017
+      DB_NAME: ecom-stripe
     depends_on:
       - mongo_db
 
-volumes:
-  mongo_data: {}
