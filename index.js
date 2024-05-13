@@ -49,6 +49,8 @@ app.get('/test', (req, res) => {
 /*
 
 1- ❯ docker-compose logs api
+=> To run the dockerfile with docker-compose - docker-compose up
+=> http://localhost:3002/test - check for url 
 
   To utilize Docker and docker-compose.yml, 
 2-  simply execute `docker-compose up` 
