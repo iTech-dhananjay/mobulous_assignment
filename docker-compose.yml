@@ -37,7 +37,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
-      - mongo-config:/data/configdb
+      - mongo-config:/data
       - mongo-data:/data/db
   node:
     image: node:20.11.0-alpine

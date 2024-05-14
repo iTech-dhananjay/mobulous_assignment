@@ -35,12 +35,9 @@ app.get('/test', (req, res) => {
 // MongoDB connection
 const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE } = process.env;
 const mongoUrl = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
+console.log(mongoUrl,'mongourl')
 
-mongoose.connect(mongoUrl, {
-     useNewUrlParser: true,
-     useUnifiedTopology: true,
-     useCreateIndex: true
-}).then(() => {
+mongoose.connect(mongoUrl ).then(() => {
      console.log('MongoDB connected successfully');
 }).catch((error) => {
      console.error('MongoDB connection error:', error);
