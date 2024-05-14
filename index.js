@@ -55,7 +55,7 @@ app.listen(PORT, () => {
 
 
 /*
-
+Docker implementation logs - https://www.zacfukuda.com/blog/docker-compose-nodejs-mongodb-2024
 1- ❯ docker-compose logs api
 => To run the dockerfile with docker-compose - docker-compose up
 => http://localhost:3002/test - check for url 
