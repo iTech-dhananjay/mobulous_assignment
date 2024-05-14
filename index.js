@@ -1,37 +1,26 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+dotenv.config();
 
 const app = express();
 
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+// Middleware
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
-(async () => {
-     dotenv.config();
-     try {
-          const mongoUrl = process.env.MONGODB_URI.replace('127.0.0.1', 'mongo_db');
-          console.log(mongoUrl);
-          console.log('Database is connected successfully...........');
-     } catch (error) {
-          console.error('mongodb is not connected', error);
-     }
-})();
-
-
-
-// import order from './router/order.js';
+// Import routers
 import users from './router/user.js';
 import product from './router/product.js';
 import warehouse from './router/warehouse.js';
 import orders from './router/order.js';
 import aggregate from './router/aggregationService.js';
 
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
-// app.use('/order', order);
+// Routes
 app.use('/users', users);
 app.use('/products', product);
 app.use('/warehouse', warehouse);
@@ -41,8 +30,27 @@ app.use('/aggregate', aggregate);
 // Test API endpoint
 app.get('/test', (req, res) => {
      res.send('Hello, world!');
-   });
+});
 
+// MongoDB connection
+const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE } = process.env;
+const mongoUrl = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
+
+mongoose.connect(mongoUrl, {
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+     useCreateIndex: true
+}).then(() => {
+     console.log('MongoDB connected successfully');
+}).catch((error) => {
+     console.error('MongoDB connection error:', error);
+});
+
+// Start the server
+const PORT = process.env.NODE_PORT || 3000;
+app.listen(PORT, () => {
+     console.log(`Server is running on port ${PORT}`);
+});
 
 
 

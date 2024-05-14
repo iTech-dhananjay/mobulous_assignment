@@ -28,24 +28,30 @@
 
 
 
-version: '3.9'
-
+version: '3.8'
 services:
-  # Mongo services
-  mongo_db:
-    container_name: ecom_container
-    image: mongo:latest
-    restart: always
-
-  # Node API services
-  api:
-    build: .
+  mongo:
+    image: mongo:6.0.13
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo-config:/data/configdb
+      - mongo-data:/data/db
+  node:
+    image: node:20.11.0-alpine
+    user: ${NODE_USER}
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    command: "yarn start"
     ports:
-      - 3002:3002
-    environment:  
-      PORT: 3002
-      MONGODB_URI: mongo_db:27017
-      DB_NAME: ecom-stripe
+      - 3002:${NODE_PORT}
+    volumes:
+      - ./:/home/node/app
     depends_on:
-      - mongo_db
-
+      - mongo
+volumes:
+  mongo-config:
+  mongo-data:

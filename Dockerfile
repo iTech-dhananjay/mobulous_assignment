@@ -1,14 +1,6 @@
 FROM node:20-alpine
-
-WORKDIR /src/app
-
-COPY package*.json .
-
+WORKDIR /app
+COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
-
 COPY . .
-
-EXPOSE 3002
-
-CMD ["npm","start"]
-
+CMD ["npm", "start"]
