@@ -3,8 +3,19 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import config from "./config.js";
 
 dotenv.config();
+
+const connectToDB = async () => {
+     try {
+          await mongoose.connect(config.db_uri, {})
+          console.log(config.db_uri,'Database Connected');
+     }catch (e) {
+          console.log(e);
+          process.exit(1)
+     }
+}
 
 const app = express();
 
@@ -27,20 +38,11 @@ app.use('/warehouse', warehouse);
 app.use('/orders', orders);
 app.use('/aggregate', aggregate);
 
+await connectToDB();
+
 // Test API endpoint
 app.get('/test', (req, res) => {
      res.send('Hello, world!');
-});
-
-// MongoDB connection
-const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE } = process.env;
-const mongoUrl = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
-console.log(mongoUrl,'mongourl')
-
-mongoose.connect(mongoUrl ).then(() => {
-     console.log('MongoDB connected successfully');
-}).catch((error) => {
-     console.error('MongoDB connection error:', error);
 });
 
 // Start the server

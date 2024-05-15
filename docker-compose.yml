@@ -28,30 +28,27 @@
 
 
 
-version: '3.8'
+version: "3"
+
 services:
-  mongo:
-    image: mongo:6.0.13
-    environment:
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+  #MongoDB
+  mongo_db:
+    container_name: database_container
+    image: mongo:latest
+    restart: always
     volumes:
-      - mongo-config:/data
-      - mongo-data:/data/db
-  node:
-    image: node:20.11.0-alpine
-    user: ${NODE_USER}
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=${NODE_ENV}
-    command: "yarn start"
+      - mongo_db:/data/db
+
+  app:
+    build: .
     ports:
-      - 3002:${NODE_PORT}
-    volumes:
-      - ./:/home/node/app
+      - 4000:3000
+    environment:
+      APP_NAME: LearnDocker
+      PORT: 3000
+      DB_URI: mongodb://mongo_db:27017/dockerlearn
     depends_on:
-      - mongo
+      - mongo_db
+
 volumes:
-  mongo-config:
-  mongo-data:
+  mongo_db: {}
