@@ -1,54 +1,21 @@
 #first step of dockerizing, we should create a couple of files here. They are Dockerfile, docker-compose.yml , and .dockerignore files. Dockerfile is to run node and mongo in two different containers. And the docker-compose file is to in here we need to run both node and Mongo containers at the same time.
 
-# version: '3.9'
-
-# services:
-#   # Mongo services
-#   mongo_db:
-#     container_name: ecom_container
-#     image: mongo:latest
-#     restart: always
-#     volumes:
-#       - mongo_data:/data/db
-
-#   # Node api services
-#   api:
-#     build: .
-#     ports:
-#       - 4000:3002
-#     environment:
-#       PORT: 3002
-#       MONGODB_URI: mongodb://127.0.0.1:27017
-#       DB_NAME: ecom-stripe
-#     depends_on:
-#       - mongo_db
-
-# volumes:
-#   mongo_data: {}
-
-
-
 version: "3"
 
 services:
+  backend:
+    build: .
+    expose:
+      - 3000
+    depends_on:
+      - mongo
+    restart: always
+
   #MongoDB
-  mongo_db:
-    container_name: database_container
+  mongo:
     image: mongo:latest
+    expose:
+      - 27017
     restart: always
     volumes:
-      - mongo_db:/data/db
-
-  app:
-    build: .
-    ports:
-      - 4000:3000
-    environment:
-      APP_NAME: LearnDocker
-      PORT: 3000
-      DB_URI: mongodb://mongo_db:27017/dockerlearn
-    depends_on:
-      - mongo_db
-
-volumes:
-  mongo_db: {}
+      - .data:/data/db
