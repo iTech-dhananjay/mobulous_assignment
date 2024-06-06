@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectToDB from './config/db.js';
+import connectToDB from './config/db.js'; // Assuming connectToDB is a named export
+
 // import errorHandler from './middleware/errorHandler.js';
 
 // Configure dotenv

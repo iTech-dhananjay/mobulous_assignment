@@ -9,7 +9,7 @@
           "mongoose": "^7.4.2",
           "nodemon": "^3.0.1"
      },
-     "name": "ecom-script",
+     "name": "ecom-backend-doc",
      "type": "module",
      "version": "1.0.0",
      "main": "index.js",
@@ -18,5 +18,9 @@
      },
      "author": "Dhananjay Kumar",
      "license": "ISC",
-     "description": ""
+     "description": "",
+     "devDependencies": {
+          "@types/cors": "^2.8.17",
+          "@types/express": "^4.17.21"
+     }
 }
