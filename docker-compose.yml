@@ -6,7 +6,7 @@ services:
   backend:
     build: .
     ports:
-      - "3002:3002"
+      - 3002:3002
     depends_on:
       - mongo
     restart: always
@@ -14,7 +14,7 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - 27017:27017
     restart: always
     volumes:
       - .data:/data/db
